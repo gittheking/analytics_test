@@ -1,0 +1,11 @@
+<h1>Welcome to Analytics</h1>
+<ul>
+Cohorts:
+	<% @cohorts.each do |cohort|  %>
+	<li>
+		<a href=<%="analytics/#{cohort.id}"%>>
+			<%= cohort.name %>
+		</a>
+	</li>
+	<% end %>
+</ul>
