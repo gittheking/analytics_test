@@ -3,7 +3,7 @@
 </h1>
 
 <!-- This is how we pass the controller data to the client -->
-<%= content_tag :div, class: 'cohort_statistics', data:{ cohort: @cohort, students: @students, days: @days, grad: @grad} do %>
+<%= content_tag :div, class: 'cohort_statistics', data:{ cohort: @cohort, students: @students, days: @days, grad: @grad } do %>
 <% end %>
 
 <canvas id="myPieChart" width="200" height="200" style="float: left;">
@@ -16,102 +16,6 @@
 <canvas id="myLineChart" width="400" height="200">
 </canvas>
 
-<script type="text/javascript">
-	
-	// Grabbing values from analytics controller
-	var cohort = $('.cohort_statistics').data('cohort');
-	var students = $('.cohort_statistics').data('students');
-
-	var daysGraduated = $('.cohort_statistics').data('days');
-
-	var employmentStats = $('.cohort_statistics').data('grad');
-
-	// Overall percentage of students currently employed
-	var employedTotal = Math.floor((employmentStats.length / students.length) * 100)
-
-	//Establishing charts
-	var $ctx = $('#myPieChart').get(0).getContext('2d');
-	var myNewChart = new Chart($ctx);
-
-	// Employment pie chart data
-	var pieData = [
-	{
-		value: employedTotal,
-		label: 'Employed',
-		color: '#f0553a'
-	},
-	{
-		value: 100 - employedTotal,
-		label: 'Unemployed',
-		color: '#fedd91'
-	}
-	]
-
-	if (daysGraduated > 120){
-		var xValues = 12;
-	} else {
-		var xValues = Math.floor(daysGraduated/10);
-	}
-
-	var xAxis = []
-	for(var i = 1; i <= xValues; i++){
-		xAxis.push(i*10);
-	}
-
-	var lineData = {
-		labels: xAxis,
-		datasets: [
-			{
-				label: "Employment over Time"
-			}
-		]
-	}
-
-	// Creating Pie Chart
-	var myLineChart = new Chart($ctx).Doughnut(pieData);
-
-	$('.percent').text(employedTotal + "%")
-
-
-// 	var xAxis = []
-// 	for(var i = 0; i < 100; i+=5){
-// 		xAxis.push(i);
-// 	}
-
-// var data = {
-//     labels: xAxis,
-//     datasets: [
-//         {
-//             label: "My First dataset",
-//             fillColor: "rgba(220,220,220,0.2)",
-//             strokeColor: "rgba(220,220,220,1)",
-//             pointColor: "rgba(220,220,220,1)",
-//             pointStrokeColor: "#fff",
-//             pointHighlightFill: "#fff",
-//             pointHighlightStroke: "rgba(220,220,220,1)",
-//             data: [65, 59, 80, 81, 56, 55, 40]
-//         },
-//         {
-//             label: "My Second dataset",
-//             fillColor: "rgba(151,187,205,0.2)",
-//             strokeColor: "rgba(151,187,205,1)",
-//             pointColor: "rgba(151,187,205,1)",
-//             pointStrokeColor: "#fff",
-//             pointHighlightFill: "#fff",
-//             pointHighlightStroke: "rgba(151,187,205,1)",
-//             data: [28, 48, 40, 19, 86, 27, 90]
-//         }
-//     ]
-// };
-
-// var pieOptions = {
-// 		//Boolean - Whether we should show a stroke on each segment
-//     segmentShowStroke : true,
-
-//     //String - The colour of each segment stroke
-//     segmentStrokeColor : "#fff",
-// }
-
-</script>
+<%= javascript_include_tag 'analytics' %>
 
 <a href="/">Home</a>
